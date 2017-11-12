@@ -19,15 +19,22 @@ class listener(StreamListener):
         try:
             #print(data) #prints the json format 
             tweet = data.split(',"text":"')
-            tweet_link = tweet[0].split(',')[1][5:]
-            print(tweet_link)
+            tweet_for_link = tweet[0]
+            print(tweet_for_link) 
+            print("/n")
+            
+            tweet_link = tweet_for_link.split(',')[1][5:]
+            print("Tweet Link: " + tweet_link)
+            
+            tweet_for_text = tweet[1].split('","source":' )
+            print("Text: "+ tweet_for_text[0]) 
             
             user_info['Tweet Link'] = tweet_link
-            #user_info['Tweet link'] = tweet_link
+            user_info['Text'] = tweet_for_text[0]
             
             #print(user_info)
             '''
-            savefile = open('twitDB.csv','a')
+            savefile = opesn('twitDB.csv','a')
             savefile.write(data) #or data and remove the three lines
             savefile.write('/n')
             savefile.close() '''
@@ -38,4 +45,5 @@ class listener(StreamListener):
     def on_error(self, status):
         print(status)
 twitterStream = Stream(auth, listener())
-twitterStream.filter(track=["Kishor"])
+twitterStream.filter(track=["pilit"])
+
