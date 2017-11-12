@@ -11,39 +11,45 @@ asecret ='VFXqXCc5XkQyD1VTgxABCEyVZfw5poEDYKEUFbK4Xxn2U'
 auth = OAuthHandler(ckey, csecret)
 auth.set_access_token(atoken, asecret)
 
-user_info = {}
 
 class listener(StreamListener):
-    
+    final_dict = {}
     def on_data(self, data):
         try:
+            user_info = {}
             #print(data) #prints the json format 
             tweet = data.split(',"text":"')
             tweet_for_link = tweet[0]
-            print(tweet_for_link) 
-            print("/n")
-            
+             
             tweet_link = tweet_for_link.split(',')[1][5:]
-            print("Tweet Link: " + tweet_link)
-            
             tweet_for_text = tweet[1].split('","source":' )
-            print("Text: "+ tweet_for_text[0]) 
+             
+            tweet_for_screen_name = tweet_for_text[1].split('"screen_name":"')[1]
             
-            user_info['Tweet Link'] = tweet_link
+            screen_name = tweet_for_screen_name.split('","location":')[0]
             user_info['Text'] = tweet_for_text[0]
+            user_info['Screen name'] = screen_name 
+            self.final_dict[tweet_link] = user_info 
             
-            #print(user_info)
-            '''
-            savefile = opesn('twitDB.csv','a')
-            savefile.write(data) #or data and remove the three lines
-            savefile.write('/n')
-            savefile.close() '''
+            print(self.final_dict)
+            #function()
+            #savefile = open('twitDB.txt','a')
+            #savefile.write(user_info) #or data and remove the three liness
+            #savefile.write('\n')
+            #savefile.close() 
             return True
         except BaseException:
             print('failed on data')
             time.sleep(5) 
     def on_error(self, status):
         print(status)
+        
+    def function(self):
+        print("CALLED")
 twitterStream = Stream(auth, listener())
 twitterStream.filter(track=["pilit"])
+
+
+    
+
 

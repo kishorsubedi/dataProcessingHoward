@@ -8,3 +8,7 @@ Text ="@RT kissore HPV is bad" id = 123120(Retweet link id) Screen name = "@retw
 JSON output for a original tweet 
 
 id = 124123(tweet link) id_str = "124123" Text= "KISHORDON" Screen name ="mmakissore"
+
+November 12 revision:
+
+Streamed each tweet, converted into a dictionary and put each tweet_dictionary in a big dictionary with it's tweet link as Key.
